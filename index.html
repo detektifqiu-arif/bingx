@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Trading</title>
+  <style>
+    /* Reset dasar */
+    body, h1, ul, li, p, div {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      background-color: #000;
+      color: #fff;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    /* Top Navigation Bar */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #111;
+      padding: 10px 20px;
+      position: relative;
+    }
+    .nav-left .logo {
+      height: 30px;
+      /* Ganti logo dengan link di bawah ini */
+      /* Contoh: src="https://media-hosting.imagekit.io//ef613d48f7134f44/bingx_1.png?Expires=1834760669&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=txvZ-ZeJOXWg2KrYSr3VlQcYeh8iHOt9PF8V-sYyQKVj5LD6rhnDjBc3w~1wRU--h1jEP4JCKKWNIe0WWbXg-uer0oJG1zH019TlqIQHwHQBlmkpOBBvbJnK7t9viQoCa2ipOr45eNBLOyQh89i6TsPiHznRXBudj442QhJxgZ5pGBeWkzTn6-KU-38EwwXy2QBIur3vZzrp9SpC6Y1hmwebs0xatUFl60hTVe4pIF~nVvAs1tZUFcju1AaWUt-lz-hgU2uB~WRqS7sUMAGu0PLLlPF0MSXRW8N~B15YVQrDxB3235JSqr3Mwse4vTx~l-XJ3j4mYaqpb1IAhIPS9Q__" */
+    }
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+      font-size: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .nav-menu li {
+      cursor: pointer;
+    }
+    .nav-right {
+      display: flex;
+      gap: 15px;
+      font-size: 12px;
+      align-items: center;
+      position: relative;
+    }
+    /* AKUN LIVE dengan background hijau dan teks hitam */
+    .akun-live {
+      background-color: #28a745;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+    }
+    /* Dropdown untuk AKUN LIVE */
+    .akun-live-dropdown {
+      position: absolute;
+      top: 35px;
+      right: 0;
+      background-color: #f00;
+      color: #fff;
+      border: 1px solid #333;
+      width: 120px;
+      display: none;
+      z-index: 1000;
+      font-size: 12px;
+      list-style: none;
+    }
+    .akun-live-dropdown li {
+      padding: 8px;
+      text-align: center;
+      cursor: pointer;
+    }
+    .akun-live-dropdown li:hover {
+      background-color: #d00;
+    }
+    .nav-item {
+      cursor: pointer;
+    }
+    /* Aset Plugin (Dropdown) */
+    .aset-plugin {
+      position: absolute;
+      top: 60px; /* di bawah navbar */
+      right: 20px;
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      padding: 10px;
+      display: none;
+      width: 180px;
+      font-size: 12px;
+      z-index: 1000;
+    }
+    .aset-plugin .plugin-header {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 5px;
+    }
+    .aset-plugin .plugin-header img {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      object-fit: cover;
+      /* Ganti foto dengan link di bawah ini */
+      /* Contoh: src="https://media-hosting.imagekit.io//7f05926042344536/Screenshot_20240828-010551_Photos.jpg?Expires=1834761077&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=HK5fxQG4VhG-NlPHcVhbdkmAbIYJmulEM5olAGYoeLwtCBxa2qmh0-L-evCXWx7fCehHoZpKJaSoqw5AAS42o4wdIYyciMudxkHbZp5U8YWCxO4bvM-Pdp6zStl0gxlBkaGp4zKwTXtYHr62cbhd2hZn-mWOlPHG775vBn5NFTeYdJiQaJkiNJ9J~6Y4unchgHx4vP5p-6XbnsAuFz8ZYOGAwekoPkKpwG9s8neJgyZDqQ-GF4ZuugImoyFpVvPY30OE~oGWjdMSR~Oc87CLXdx4t8v~gNLOVUgQpitZsqXcEKcjwq4jF26GVce4PwwpbOs1k1idHBvDlNVeK5NHdg__" */
+    }
+    .aset-plugin .plugin-header span.name {
+      font-weight: bold;
+      flex-grow: 1;
+    }
+    .aset-plugin .plugin-header span.toggle {
+      cursor: pointer;
+    }
+    .aset-plugin .plugin-body {
+      text-align: center;
+      font-weight: bold;
+    }
+    /* Account Info Elegan (tanpa kotak) */
+    .account-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    .account-info .info-item {
+      color: #fff;
+    }
+    .account-info .info-item span.label {
+      font-weight: normal;
+      color: #aaa;
+      margin-right: 5px;
+    }
+    .account-info .info-item span.value {
+      font-weight: bold;
+      color: #fff;
+    }
+    /* Tabel Trading */
+    .table-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background-color: #1e1e1e;
+      font-size: 12px;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #333;
+      text-align: center;
+    }
+    th {
+      background-color: #333;
+    }
+    .positive {
+      color: #00ff00;
+    }
+    .negative {
+      color: #ff4444;
+    }
+    /* Responsive untuk mobile */
+    @media (max-width: 600px) {
+      .nav-menu {
+        font-size: 10px;
+      }
+      .account-info {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <nav class="top-nav">
+    <div class="nav-left">
+      <!-- Ganti logo dengan link di bawah ini -->
+      <img src="https://media-hosting.imagekit.io//ef613d48f7134f44/bingx_1.png?Expires=1834760669&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=txvZ-ZeJOXWg2KrYSr3VlQcYeh8iHOt9PF8V-sYyQKVj5LD6rhnDjBc3w~1wRU--h1jEP4JCKKWNIe0WWbXg-uer0oJG1zH019TlqIQHwHQBlmkpOBBvbJnK7t9viQoCa2ipOr45eNBLOyQh89i6TsPiHznRXBudj442QhJxgZ5pGBeWkzTn6-KU-38EwwXy2QBIur3vZzrp9SpC6Y1hmwebs0xatUFl60hTVe4pIF~nVvAs1tZUFcju1AaWUt-lz-hgU2uB~WRqS7sUMAGu0PLLlPF0MSXRW8N~B15YVQrDxB3235JSqr3Mwse4vTx~l-XJ3j4mYaqpb1IAhIPS9Q__" alt="BingX Logo" class="logo">
+    </div>
+    <ul class="nav-menu">
+      <li>Buy Crypto</li>
+      <li>Markets</li>
+      <li>Spot</li>
+      <li>Derivatives</li>
+      <li>Copy Trading</li>
+      <li>Wealth</li>
+      <li>Rewards</li>
+      <li>Hub</li>
+      <li>More</li>
+    </ul>
+    <div class="nav-right">
+      <!-- AKUN LIVE yang ketika diklik menampilkan dropdown -->
+      <div class="akun-live" id="akun-live-btn">AKUN LIVE</div>
+      <!-- Dropdown untuk akun live -->
+      <ul class="akun-live-dropdown" id="akun-live-dropdown">
+        <li id="akun-demo-btn">AKUN DEMO</li>
+      </ul>
+      <span class="nav-item" id="aset-toggle">aset</span>
+    </div>
+  </nav>
+  
+  <!-- Aset Plugin (Dropdown) -->
+  <div id="aset-plugin" class="aset-plugin">
+    <div class="plugin-header">
+      <!-- Ganti foto dengan link di bawah ini -->
+      <img src="https://media-hosting.imagekit.io//7f05926042344536/Screenshot_20240828-010551_Photos.jpg?Expires=1834761077&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=HK5fxQG4VhG-NlPHcVhbdkmAbIYJmulEM5olAGYoeLwtCBxa2qmh0-L-evCXWx7fCehHoZpKJaSoqw5AAS42o4wdIYyciMudxkHbZp5U8YWCxO4bvM-Pdp6zStl0gxlBkaGp4zKwTXtYHr62cbhd2hZn-mWOlPHG775vBn5NFTeYdJiQaJkiNJ9J~6Y4unchgHx4vP5p-6XbnsAuFz8ZYOGAwekoPkKpwG9s8neJgyZDqQ-GF4ZuugImoyFpVvPY30OE~oGWjdMSR~Oc87CLXdx4t8v~gNLOVUgQpitZsqXcEKcjwq4jF26GVce4PwwpbOs1k1idHBvDlNVeK5NHdg__" alt="Foto">
+      <span class="name">AKUN LIVE</span>
+      <span class="toggle" id="toggle-balance" title="Toggle Saldo">👁️</span>
+    </div>
+    <div class="plugin-body">
+      Total Assets: <span id="asset-value">280.00</span> USDT
+    </div>
+  </div>
+  
+  <div class="container">
+    <h1>Portofolio Trading</h1>
+    
+    <!-- Account Info (ditampilkan elegan di atas tabel) -->
+    <div class="account-info" id="account-info">
+      <div class="info-item"><span class="label">USDT:</span><span class="value">0</span></div>
+      <div class="info-item"><span class="label">Equity:</span><span class="value">280.00</span></div>
+      <div class="info-item"><span class="label">Account Balance:</span><span class="value">280.00</span></div>
+      <div class="info-item"><span class="label">Unrealized PnL:</span><span class="value">--</span></div>
+      <div class="info-item"><span class="label">Margin Rate:</span><span class="value">0</span></div>
+      <div class="info-item"><span class="label">Avail. Margin:</span><span class="value">0.00</span></div>
+      <div class="info-item"><span class="label">Position Margin:</span><span class="value">0.00</span></div>
+      <div class="info-item"><span class="label">Trial Fund:</span><span class="value">0</span></div>
+    </div>
+
+    <!-- Tabel Trading -->
+    <div class="table-container" id="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Pair</th>
+            <th>Type</th>
+            <th>Size</th>
+            <th>Leverage</th>
+            <th>PnL</th>
+            <th>Close Time</th>
+            <th>Close Type</th>
+            <th>Close Price</th>
+            <th>Trading Fee</th>
+            <th>Funding Fee</th>
+            <th>Open Time</th>
+            <th>Avg. Open Price</th>
+            <th>Open Type</th>
+            <th>TP/SL</th>
+            <th>Trailing Stop</th>
+            <th>Order No.</th>
+          </tr>
+        </thead>
+        <tbody id="tradeBody">
+          <!-- Data order akan di-generate oleh JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script>
+    // Fungsi utilitas: menambahkan nol di depan angka jika kurang dari 10
+    function pad(n) {
+      return n < 10 ? "0" + n : n;
+    }
+    
+    // Fungsi formatTime: mengubah objek Date menjadi format YYYY/MM/DD HH:MM:SS
+    function formatTime(date) {
+      return date.getFullYear() + "/" +
+             pad(date.getMonth() + 1) + "/" +
+             pad(date.getDate()) + " " +
+             pad(date.getHours()) + ":" +
+             pad(date.getMinutes()) + ":" +
+             pad(date.getSeconds());
+    }
+    
+    // Daftar simbol koin
+    const coins = [
+      "BTC", "ETH", "USDT", "XRP", "ADA", "BNB", "SOL", "DOT", "DOGE", "LTC",
+      "LINK", "BCH", "UNI", "XLM", "TRX", "MATIC", "AAVE", "ATOM", "FIL", "VET",
+      "THETA", "ALGO", "IOST", "KSM", "DASH", "ZEC", "HT", "SHIB", "HOT", "AR",
+      "FTT", "DCR", "NEO", "XMR", "FTM", "SUSHI", "LUNA", "BTT", "AMP", "ENJ",
+      "1INCH", "EGLD", "TFUEL", "ZIL", "BAT", "WAVES", "VGX", "CELO", "COMP", "QNT"
+    ];
+    
+    // Fungsi untuk menghasilkan nomor order acak
+    function getRandomOrderNo() {
+      return Math.floor(Math.random() * 1e18);
+    }
+    
+    // Fungsi untuk menghasilkan angka acak dengan desimal tertentu
+    function getRandomNumber(min, max, decimals) {
+      const num = Math.random() * (max - min) + min;
+      return parseFloat(num.toFixed(decimals));
+    }
+    
+    // Array untuk menampung order
+    let orders = [];
+    
+    /* 
+      Kita generate order dari tanggal 10 Februari 2025 sampai 21 Februari 2025,
+      kemudian urutkan secara descending sehingga order dengan tanggal terbaru (21 Februari 2025) muncul di atas.
+    */
+    const startDate = new Date(2025, 1, 10); // 10 Februari 2025
+    const totalDays = 12; // 10 sampai 21 Februari 2025
+    
+    for (let d = 0; d < totalDays; d++) {
+      let currentDay = new Date(startDate.getTime());
+      currentDay.setDate(currentDay.getDate() + d);
+      const ordersCount = Math.floor(Math.random() * (10 - 8 + 1)) + 8; // 8-10 order per hari
+      for (let j = 0; j < ordersCount; j++) {
+        // Waktu close acak pada hari tersebut
+        let hour = Math.floor(Math.random() * 24);
+        let minute = Math.floor(Math.random() * 60);
+        let second = Math.floor(Math.random() * 60);
+        let closeTime = new Date(currentDay.getTime());
+        closeTime.setHours(hour, minute, second);
+        // Open time: closeTime dikurangi antara 1 hingga 15 menit
+        let diff = Math.floor(Math.random() * 15) + 1;
+        let openTime = new Date(closeTime.getTime() - diff * 60000);
+        let times = { close: formatTime(closeTime), open: formatTime(openTime) };
+    
+        // Pilih koin secara acak
+        const coin = coins[Math.floor(Math.random() * coins.length)];
+        const pair = coin + "USDT";
+        const type = Math.random() > 0.5 ? "Long" : "Short";
+        
+        // Margin (size) acak antara 1 dan 10 USDT
+        const size = getRandomNumber(1, 10, 2);
+        
+        // Leverage acak antara 50x hingga 75x
+        const leverage = Math.floor(Math.random() * (75 - 50 + 1)) + 50 + "x";
+        
+        // Profit percentage acak antara 50% hingga 300%
+        const profitPerc = getRandomNumber(50, 300, 2);
+        const profitAmount = (size * profitPerc / 100).toFixed(2);
+        const pnl = "+" + profitAmount + " (" + profitPerc + "%)";
+        
+        // Data order lainnya
+        const closeType = "Closed manually";
+        const closePrice = getRandomNumber(10, 50000, 3);
+        const tradingFee = getRandomNumber(0.01, 1, 4);
+        const fundingFee = getRandomNumber(-0.1, 0, 5);
+        const avgOpenPrice = (closePrice + getRandomNumber(-5, 5, 3)).toFixed(3);
+        const openType = "Market Order";
+        const tp_sl = "--";
+        const trailingStop = "--";
+        const orderNo = getRandomOrderNo();
+        
+        orders.push({
+          pair,
+          type,
+          size: size + " USDT",
+          leverage,
+          pnl,
+          closeTime: times.close,
+          closeTimestamp: closeTime.getTime(), // untuk sorting
+          closeType,
+          closePrice,
+          tradingFee,
+          fundingFee,
+          openTime: times.open,
+          avgOpenPrice,
+          openType,
+          tp_sl,
+          trailingStop,
+          orderNo
+        });
+      }
+    }
+    
+    // Urutkan orders descending berdasarkan closeTimestamp
+    orders.sort((a, b) => b.closeTimestamp - a.closeTimestamp);
+    
+    // Tampilkan order ke dalam tabel
+    const tradeBody = document.getElementById("tradeBody");
+    let rowsHtml = "";
+    orders.forEach(order => {
+      rowsHtml += `<tr>
+        <td>${order.pair}</td>
+        <td>${order.type}</td>
+        <td>${order.size}</td>
+        <td>${order.leverage}</td>
+        <td class="positive">${order.pnl}</td>
+        <td>${order.closeTime}</td>
+        <td>${order.closeType}</td>
+        <td>${order.closePrice}</td>
+        <td>${order.tradingFee}</td>
+        <td>${order.fundingFee}</td>
+        <td>${order.openTime}</td>
+        <td>${order.avgOpenPrice}</td>
+        <td>${order.openType}</td>
+        <td>${order.tp_sl}</td>
+        <td>${order.trailingStop}</td>
+        <td>${order.orderNo}</td>
+      </tr>`;
+    });
+    tradeBody.innerHTML = rowsHtml;
+    
+    // Toggle untuk aset plugin
+    document.getElementById('aset-toggle').addEventListener('click', function() {
+      const plugin = document.getElementById('aset-plugin');
+      plugin.style.display = plugin.style.display === 'block' ? 'none' : 'block';
+    });
+    
+    // Toggle untuk menyembunyikan/menampilkan saldo di aset plugin
+    document.getElementById('toggle-balance').addEventListener('click', function() {
+      const assetValue = document.getElementById('asset-value');
+      assetValue.style.visibility = assetValue.style.visibility === 'hidden' ? 'visible' : 'hidden';
+    });
+    
+    // Dropdown untuk AKUN LIVE
+    const akunLiveBtn = document.getElementById('akun-live-btn');
+    const akunLiveDropdown = document.getElementById('akun-live-dropdown');
+    akunLiveBtn.addEventListener('click', function() {
+      akunLiveDropdown.style.display = akunLiveDropdown.style.display === 'block' ? 'none' : 'block';
+    });
+    
+    // Ketika opsi AKUN DEMO diklik, kosongkan halaman portofolio
+    document.getElementById('akun-demo-btn').addEventListener('click', function() {
+      document.getElementById('account-info').innerHTML = '<h2 style="text-align:center; margin:20px 0;">Portofolio Kosong</h2>';
+      document.getElementById('table-container').innerHTML = '';
+      akunLiveDropdown.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
