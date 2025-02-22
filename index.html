@@ -319,103 +319,125 @@
     }
     updateTime();
     
-    // Daftar lengkap 100 koin (COIN1 hingga COIN100)
-    const coins = Array.from({length: 100}, (_, i) => `COIN${i+1}`);
+    // Daftar lengkap koin asli dari script BingX sebelumnya (50 koin)
+    const coinList = [
+      "BTC", "ETH", "USDT", "XRP", "ADA", "BNB", "SOL", "DOT", "DOGE", "LTC",
+      "LINK", "BCH", "UNI", "XLM", "TRX", "MATIC", "AAVE", "ATOM", "FIL", "VET",
+      "THETA", "ALGO", "IOST", "KSM", "DASH", "ZEC", "HT", "SHIB", "HOT", "AR",
+      "FTT", "DCR", "NEO", "XMR", "FTM", "SUSHI", "LUNA", "BTT", "AMP", "ENJ",
+      "1INCH", "EGLD", "TFUEL", "ZIL", "BAT", "WAVES", "VGX", "CELO", "COMP", "QNT"
+    ];
+    // Untuk mencapai 100 coin, duplikasi daftar tersebut
+    const coinsCombined = coinList.concat(coinList);
     
-    // Fungsi untuk menghasilkan nomor order acak
-    function getRandomOrderNo() {
-      return Math.floor(Math.random() * 1e18);
-    }
-    
-    // Fungsi untuk menghasilkan angka acak dengan desimal tertentu
-    function getRandomNumber(min, max, decimals) {
-      const num = Math.random() * (max - min) + min;
-      return parseFloat(num.toFixed(decimals));
-    }
-    
-    // Fungsi untuk menghasilkan order hanya untuk hari ini, sehingga waktu close tidak melebihi waktu saat ini.
-    function generateOrdersForToday() {
-      let orders = [];
-      // Tetapkan jumlah order menjadi 100 (satu order per koin)
-      const ordersCount = 100;
-      const today = new Date();
-      // Ambil awal hari (00:00) untuk hari ini dengan zona waktu Jakarta
-      const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      const nowTimestamp = today.getTime();
-      const diffToday = nowTimestamp - base.getTime(); // ms sejak awal hari
-      
-      for (let j = 0; j < ordersCount; j++) {
-        // Generate offset acak antara 0 dan diffToday sehingga orderTime <= sekarang
-        const randomOffset = Math.floor(Math.random() * diffToday);
-        let orderTime = new Date(base.getTime() + randomOffset);
-        // Open time: orderTime dikurangi antara 1 hingga 15 menit, pastikan tidak kurang dari base
-        let diffMinutes = Math.floor(Math.random() * 15) + 1;
-        let openTime = new Date(orderTime.getTime() - diffMinutes * 60000);
-        if (openTime.getTime() < base.getTime()) {
-          openTime = new Date(base.getTime());
-        }
-        let times = { close: formatTime(orderTime), open: formatTime(openTime) };
-    
-        // Pilih koin secara acak dari daftar 100 koin
-        const coin = coins[Math.floor(Math.random() * coins.length)];
-        const pair = coin + "USDT";
-        const type = Math.random() > 0.5 ? "Long" : "Short";
-        
-        // Margin (size) acak antara 1 dan 10 USDT
-        const size = getRandomNumber(1, 10, 2);
-        
-        // Leverage acak antara 50x hingga 75x
-        const leverage = Math.floor(Math.random() * (75 - 50 + 1)) + 50 + "x";
-        
-        // Profit percentage acak antara 50% hingga 300%
-        const profitPerc = getRandomNumber(50, 300, 2);
-        const profitAmount = (size * profitPerc / 100).toFixed(2);
-        const pnl = "+" + profitAmount + " (" + profitPerc + "%)";
-        
-        // Data order lainnya
-        const closeType = "Closed manually";
-        const closePrice = getRandomNumber(10, 50000, 3);
-        const tradingFee = getRandomNumber(0.01, 1, 4);
-        const fundingFee = getRandomNumber(-0.1, 0, 5);
-        const avgOpenPrice = (closePrice + getRandomNumber(-5, 5, 3)).toFixed(3);
-        const openType = "Market Order";
-        const tp_sl = "--";
-        const trailingStop = "--";
-        const orderNo = getRandomOrderNo();
-        
-        orders.push({
-          pair,
-          type,
-          size: size + " USDT",
-          leverage,
-          pnl,
-          closeTime: times.close,
-          closeTimestamp: orderTime.getTime(), // untuk sorting
-          closeType,
-          closePrice,
-          tradingFee,
-          fundingFee,
-          openTime: times.open,
-          avgOpenPrice,
-          openType,
-          tp_sl,
-          trailingStop,
-          orderNo
-        });
+    // Fungsi untuk mengacak array (Fisher–Yates shuffle)
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
       }
-      // Urutkan descending berdasarkan waktu close
+    }
+    shuffle(coinsCombined);
+    
+    // Indeks untuk mengambil coin secara berurutan dari coinsCombined
+    let coinIndex = 0;
+    
+    // Fungsi untuk menghasilkan order berdasarkan hari, dengan jumlah order per hari antara 8 dan 10.
+    // Order akan didistribusikan ke beberapa hari ke belakang hingga total order mencapai 100.
+    function generateOrdersMultiDay() {
+      let orders = [];
+      let totalOrdersTarget = 100;
+      let ordersGenerated = 0;
+      let day = 0;
+      const now = new Date();
+      
+      // Loop untuk menghasilkan order dari hari ini ke belakang sampai mencapai 100 order
+      while (ordersGenerated < totalOrdersTarget) {
+        // Tentukan hari: hari 0 adalah hari ini, hari 1 adalah kemarin, dll.
+        let currentDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() - day);
+        // Jika hari ini, batas atas waktu adalah sekarang; jika tidak, gunakan akhir hari (23:59:59)
+        let endDay;
+        if (day === 0) {
+          endDay = now;
+        } else {
+          endDay = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate(), 23, 59, 59);
+        }
+        const diffDay = endDay.getTime() - currentDay.getTime();
+        // Jumlah order untuk hari ini, acak antara 8 dan 10
+        let ordersCount = Math.floor(Math.random() * (10 - 8 + 1)) + 8;
+        // Jika jumlah order yang sudah dihasilkan + ordersCount melebihi target, sesuaikan
+        if (ordersGenerated + ordersCount > totalOrdersTarget) {
+          ordersCount = totalOrdersTarget - ordersGenerated;
+        }
+        
+        for (let i = 0; i < ordersCount; i++) {
+          // Generate offset acak antara 0 dan diffDay sehingga orderTime tidak melebihi batas hari
+          const randomOffset = Math.floor(Math.random() * diffDay);
+          let orderTime = new Date(currentDay.getTime() + randomOffset);
+          // Open time: orderTime dikurangi antara 1 hingga 15 menit, tidak kurang dari awal hari
+          let diffMinutes = Math.floor(Math.random() * 15) + 1;
+          let openTime = new Date(orderTime.getTime() - diffMinutes * 60000);
+          if (openTime.getTime() < currentDay.getTime()) {
+            openTime = new Date(currentDay.getTime());
+          }
+          let times = { close: formatTime(orderTime), open: formatTime(openTime) };
+          
+          // Ambil coin secara berurutan dari coinsCombined
+          const coin = coinsCombined[coinIndex % coinsCombined.length];
+          coinIndex++;
+          const pair = coin + "USDT";
+          const type = Math.random() > 0.5 ? "Long" : "Short";
+          const size = getRandomNumber(1, 10, 2);
+          const leverage = Math.floor(Math.random() * (75 - 50 + 1)) + 50 + "x";
+          const profitPerc = getRandomNumber(50, 300, 2);
+          const profitAmount = (size * profitPerc / 100).toFixed(2);
+          const pnl = "+" + profitAmount + " (" + profitPerc + "%)";
+          const closeType = "Closed manually";
+          const closePrice = getRandomNumber(10, 50000, 3);
+          const tradingFee = getRandomNumber(0.01, 1, 4);
+          const fundingFee = getRandomNumber(-0.1, 0, 5);
+          const avgOpenPrice = (closePrice + getRandomNumber(-5, 5, 3)).toFixed(3);
+          const openType = "Market Order";
+          const tp_sl = "--";
+          const trailingStop = "--";
+          const orderNo = getRandomOrderNo();
+          
+          orders.push({
+            pair,
+            type,
+            size: size + " USDT",
+            leverage,
+            pnl,
+            closeTime: times.close,
+            closeTimestamp: orderTime.getTime(),
+            closeType,
+            closePrice,
+            tradingFee,
+            fundingFee,
+            openTime: times.open,
+            avgOpenPrice,
+            openType,
+            tp_sl,
+            trailingStop,
+            orderNo
+          });
+          
+          ordersGenerated++;
+        }
+        day++;
+      }
+      // Urutkan orders descending berdasarkan waktu close
       orders.sort((a, b) => b.closeTimestamp - a.closeTimestamp);
       return orders;
     }
     
     // Fungsi untuk memperbarui tabel order
     function updateOrders() {
-      const orders = generateOrdersForToday();
+      const orders = generateOrdersMultiDay();
       const tradeBody = document.getElementById("tradeBody");
       let rowsHtml = "";
       orders.forEach(order => {
-        // Tambahkan kelas berdasarkan tipe order: Long = .long, Short = .short
-        const orderTypeClass = order.type.toLowerCase();
+        const orderTypeClass = order.type.toLowerCase(); // 'long' atau 'short'
         rowsHtml += `<tr>
           <td>${order.pair}</td>
           <td class="${orderTypeClass}">${order.type}</td>
