@@ -33,8 +33,6 @@
     }
     .nav-left .logo {
       height: 30px;
-      /* Ganti logo dengan link berikut */
-      /* Contoh: src="https://media-hosting.imagekit.io//ef613d48f7134f44/bingx_1.png?Expires=..." */
     }
     .nav-menu {
       list-style: none;
@@ -113,8 +111,6 @@
       height: 25px;
       border-radius: 50%;
       object-fit: cover;
-      /* Ganti foto dengan link berikut */
-      /* Contoh: src="https://media-hosting.imagekit.io//7f05926042344536/Screenshot_20240828-010551_Photos.jpg?Expires=..." */
     }
     .aset-plugin .plugin-header span.name {
       font-weight: bold;
@@ -323,6 +319,15 @@
     }
     updateTime();
     
+    // Daftar lengkap koin (menggunakan daftar dari skrip sebelumnya)
+    const coins = [
+      "BTC", "ETH", "USDT", "XRP", "ADA", "BNB", "SOL", "DOT", "DOGE", "LTC",
+      "LINK", "BCH", "UNI", "XLM", "TRX", "MATIC", "AAVE", "ATOM", "FIL", "VET",
+      "THETA", "ALGO", "IOST", "KSM", "DASH", "ZEC", "HT", "SHIB", "HOT", "AR",
+      "FTT", "DCR", "NEO", "XMR", "FTM", "SUSHI", "LUNA", "BTT", "AMP", "ENJ",
+      "1INCH", "EGLD", "TFUEL", "ZIL", "BAT", "WAVES", "VGX", "CELO", "COMP", "QNT"
+    ];
+    
     // Fungsi untuk menghasilkan nomor order acak
     function getRandomOrderNo() {
       return Math.floor(Math.random() * 1e18);
@@ -340,7 +345,7 @@
       // Misalnya, kita buat 8-10 order untuk hari ini
       const ordersCount = Math.floor(Math.random() * (10 - 8 + 1)) + 8;
       const today = new Date();
-      // Ambil awal hari (00:00) dengan zona waktu Jakarta
+      // Ambil awal hari (00:00) untuk hari ini (dengan zona waktu Jakarta)
       const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const nowTimestamp = today.getTime();
       // Selisih antara waktu saat ini dengan awal hari (dalam ms)
@@ -350,22 +355,15 @@
         // Generate offset acak antara 0 dan diffToday sehingga orderTime <= now
         const randomOffset = Math.floor(Math.random() * diffToday);
         let orderTime = new Date(base.getTime() + randomOffset);
-        // Open time: orderTime dikurangi 1-15 menit (pastikan tidak kurang dari base)
-        let diff = Math.floor(Math.random() * 15) + 1;
-        let openTime = new Date(orderTime.getTime() - diff * 60000);
+        // Open time: orderTime dikurangi antara 1 hingga 15 menit, pastikan tidak kurang dari base
+        let diffMinutes = Math.floor(Math.random() * 15) + 1;
+        let openTime = new Date(orderTime.getTime() - diffMinutes * 60000);
         if (openTime.getTime() < base.getTime()) {
           openTime = new Date(base.getTime());
         }
         let times = { close: formatTime(orderTime), open: formatTime(openTime) };
     
-        // Pilih koin secara acak
-        const coins = [
-          "BTC", "ETH", "USDT", "XRP", "ADA", "BNB", "SOL", "DOT", "DOGE", "LTC",
-          "LINK", "BCH", "UNI", "XLM", "TRX", "MATIC", "AAVE", "ATOM", "FIL", "VET",
-          "THETA", "ALGO", "IOST", "KSM", "DASH", "ZEC", "HT", "SHIB", "HOT", "AR",
-          "FTT", "DCR", "NEO", "XMR", "FTM", "SUSHI", "LUNA", "BTT", "AMP", "ENJ",
-          "1INCH", "EGLD", "TFUEL", "ZIL", "BAT", "WAVES", "VGX", "CELO", "COMP", "QNT"
-        ];
+        // Pilih koin secara acak dari daftar lengkap
         const coin = coins[Math.floor(Math.random() * coins.length)];
         const pair = coin + "USDT";
         const type = Math.random() > 0.5 ? "Long" : "Short";
