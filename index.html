@@ -305,7 +305,7 @@
              pad(date.getSeconds());
     }
     
-    // Update waktu secara otomatis (menggunakan zona waktu default browser)
+    // Update waktu menggunakan zona waktu Jakarta
     function updateTime() {
       const now = new Date();
       const options = {
@@ -334,24 +334,28 @@
       return parseFloat(num.toFixed(decimals));
     }
     
-    // Fungsi untuk menghasilkan order untuk hari ini saja
+    // Fungsi untuk menghasilkan order hanya untuk hari ini, sehingga waktu close tidak melebihi waktu saat ini.
     function generateOrdersForToday() {
       let orders = [];
       // Misalnya, kita buat 8-10 order untuk hari ini
       const ordersCount = Math.floor(Math.random() * (10 - 8 + 1)) + 8;
       const today = new Date();
-      // Atur tanggal hari ini (tanpa waktu) sebagai dasar
+      // Ambil awal hari (00:00) dengan zona waktu Jakarta
       const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const nowTimestamp = today.getTime();
+      // Selisih antara waktu saat ini dengan awal hari (dalam ms)
+      const diffToday = nowTimestamp - base.getTime();
+      
       for (let j = 0; j < ordersCount; j++) {
-        // Generate waktu close acak pada hari ini
-        let orderTime = new Date(base.getTime());
-        let hour = Math.floor(Math.random() * 24);
-        let minute = Math.floor(Math.random() * 60);
-        let second = Math.floor(Math.random() * 60);
-        orderTime.setHours(hour, minute, second);
-        // Open time adalah close time dikurangi 1-15 menit
+        // Generate offset acak antara 0 dan diffToday sehingga orderTime <= now
+        const randomOffset = Math.floor(Math.random() * diffToday);
+        let orderTime = new Date(base.getTime() + randomOffset);
+        // Open time: orderTime dikurangi 1-15 menit (pastikan tidak kurang dari base)
         let diff = Math.floor(Math.random() * 15) + 1;
         let openTime = new Date(orderTime.getTime() - diff * 60000);
+        if (openTime.getTime() < base.getTime()) {
+          openTime = new Date(base.getTime());
+        }
         let times = { close: formatTime(orderTime), open: formatTime(openTime) };
     
         // Pilih koin secara acak
@@ -419,6 +423,7 @@
       const tradeBody = document.getElementById("tradeBody");
       let rowsHtml = "";
       orders.forEach(order => {
+        // Tambahkan kelas berdasarkan tipe order: Long = .long, Short = .short
         const orderTypeClass = order.type.toLowerCase(); // 'long' atau 'short'
         rowsHtml += `<tr>
           <td>${order.pair}</td>
