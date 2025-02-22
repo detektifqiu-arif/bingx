@@ -33,7 +33,7 @@
     }
     .nav-left .logo {
       height: 30px;
-      /* Ganti logo dengan link di bawah ini */
+      /* Ganti logo dengan link berikut */
       /* Contoh: src="https://media-hosting.imagekit.io//ef613d48f7134f44/bingx_1.png?Expires=..." */
     }
     .nav-menu {
@@ -113,7 +113,7 @@
       height: 25px;
       border-radius: 50%;
       object-fit: cover;
-      /* Ganti foto dengan link di bawah ini */
+      /* Ganti foto dengan link berikut */
       /* Contoh: src="https://media-hosting.imagekit.io//7f05926042344536/Screenshot_20240828-010551_Photos.jpg?Expires=..." */
     }
     .aset-plugin .plugin-header span.name {
@@ -203,7 +203,7 @@
   <!-- Top Navigation Bar -->
   <nav class="top-nav">
     <div class="nav-left">
-      <!-- Ganti logo dengan link di bawah ini -->
+      <!-- Ganti logo dengan link berikut -->
       <img src="https://media-hosting.imagekit.io//ef613d48f7134f44/bingx_1.png?Expires=1834760669&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=txvZ-ZeJOXWg2KrYSr3VlQcYeh8iHOt9PF8V-sYyQKVj5LD6rhnDjBc3w~1wRU--h1jEP4JCKKWNIe0WWbXg-uer0oJG1zH019TlqIQHwHQBlmkpOBBvbJnK7t9viQoCa2ipOr45eNBLOyQh89i6TsPiHznRXBudj442QhJxgZ5pGBeWkzTn6-KU-38EwwXy2QBIur3vZzrp9SpC6Y1hmwebs0xatUFl60hTVe4pIF~nVvAs1tZUFcju1AaWUt-lz-hgU2uB~WRqS7sUMAGu0PLLlPF0MSXRW8N~B15YVQrDxB3235JSqr3Mwse4vTx~l-XJ3j4mYaqpb1IAhIPS9Q__" alt="BingX Logo" class="logo">
     </div>
     <ul class="nav-menu">
@@ -231,7 +231,7 @@
   <!-- Aset Plugin (Dropdown) -->
   <div id="aset-plugin" class="aset-plugin">
     <div class="plugin-header">
-      <!-- Ganti foto dengan link di bawah ini -->
+      <!-- Ganti foto dengan link berikut -->
       <img src="https://media-hosting.imagekit.io//7f05926042344536/Screenshot_20240828-010551_Photos.jpg?Expires=1834761077&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=HK5fxQG4VhG-NlPHcVhbdkmAbIYJmulEM5olAGYoeLwtCBxa2qmh0-L-evCXWx7fCehHoZpKJaSoqw5AAS42o4wdIYyciMudxkHbZp5U8YWCxO4bvM-Pdp6zStl0gxlBkaGp4zKwTXtYHr62cbhd2hZn-mWOlPHG775vBn5NFTeYdJiQaJkiNJ9J~6Y4unchgHx4vP5p-6XbnsAuFz8ZYOGAwekoPkKpwG9s8neJgyZDqQ-GF4ZuugImoyFpVvPY30OE~oGWjdMSR~Oc87CLXdx4t8v~gNLOVUgQpitZsqXcEKcjwq4jF26GVce4PwwpbOs1k1idHBvDlNVeK5NHdg__" alt="Foto">
       <span class="name">AKUN LIVE</span>
       <span class="toggle" id="toggle-balance" title="Toggle Saldo">👁️</span>
@@ -305,22 +305,23 @@
              pad(date.getSeconds());
     }
     
-    // Update waktu secara otomatis ketika halaman di-refresh
+    // Update waktu secara otomatis (menggunakan zona waktu default browser)
     function updateTime() {
       const now = new Date();
-      const options = { weekday: "long", day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false };
+      const options = {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+        timeZone: "Asia/Jakarta"
+      };
       document.getElementById("waktu-sekarang").textContent = now.toLocaleDateString("id-ID", options);
     }
     updateTime();
-    
-    // Daftar simbol koin
-    const coins = [
-      "BTC", "ETH", "USDT", "XRP", "ADA", "BNB", "SOL", "DOT", "DOGE", "LTC",
-      "LINK", "BCH", "UNI", "XLM", "TRX", "MATIC", "AAVE", "ATOM", "FIL", "VET",
-      "THETA", "ALGO", "IOST", "KSM", "DASH", "ZEC", "HT", "SHIB", "HOT", "AR",
-      "FTT", "DCR", "NEO", "XMR", "FTM", "SUSHI", "LUNA", "BTT", "AMP", "ENJ",
-      "1INCH", "EGLD", "TFUEL", "ZIL", "BAT", "WAVES", "VGX", "CELO", "COMP", "QNT"
-    ];
     
     // Fungsi untuk menghasilkan nomor order acak
     function getRandomOrderNo() {
@@ -333,33 +334,34 @@
       return parseFloat(num.toFixed(decimals));
     }
     
-    // Array untuk menampung order
-    let orders = [];
-    
-    /* 
-      Generate order dari tanggal 10 Februari 2025 sampai 21 Februari 2025,
-      lalu urutkan descending sehingga order dengan tanggal terbaru muncul di atas.
-    */
-    const startDate = new Date(2025, 1, 10); // 10 Februari 2025
-    const totalDays = 12; // 10 sampai 21 Februari 2025
-    
-    for (let d = 0; d < totalDays; d++) {
-      let currentDay = new Date(startDate.getTime());
-      currentDay.setDate(currentDay.getDate() + d);
-      const ordersCount = Math.floor(Math.random() * (10 - 8 + 1)) + 8; // 8-10 order per hari
+    // Fungsi untuk menghasilkan order untuk hari ini saja
+    function generateOrdersForToday() {
+      let orders = [];
+      // Misalnya, kita buat 8-10 order untuk hari ini
+      const ordersCount = Math.floor(Math.random() * (10 - 8 + 1)) + 8;
+      const today = new Date();
+      // Atur tanggal hari ini (tanpa waktu) sebagai dasar
+      const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       for (let j = 0; j < ordersCount; j++) {
-        // Waktu close acak pada hari tersebut
+        // Generate waktu close acak pada hari ini
+        let orderTime = new Date(base.getTime());
         let hour = Math.floor(Math.random() * 24);
         let minute = Math.floor(Math.random() * 60);
         let second = Math.floor(Math.random() * 60);
-        let closeTime = new Date(currentDay.getTime());
-        closeTime.setHours(hour, minute, second);
-        // Open time: closeTime dikurangi antara 1 hingga 15 menit
+        orderTime.setHours(hour, minute, second);
+        // Open time adalah close time dikurangi 1-15 menit
         let diff = Math.floor(Math.random() * 15) + 1;
-        let openTime = new Date(closeTime.getTime() - diff * 60000);
-        let times = { close: formatTime(closeTime), open: formatTime(openTime) };
+        let openTime = new Date(orderTime.getTime() - diff * 60000);
+        let times = { close: formatTime(orderTime), open: formatTime(openTime) };
     
         // Pilih koin secara acak
+        const coins = [
+          "BTC", "ETH", "USDT", "XRP", "ADA", "BNB", "SOL", "DOT", "DOGE", "LTC",
+          "LINK", "BCH", "UNI", "XLM", "TRX", "MATIC", "AAVE", "ATOM", "FIL", "VET",
+          "THETA", "ALGO", "IOST", "KSM", "DASH", "ZEC", "HT", "SHIB", "HOT", "AR",
+          "FTT", "DCR", "NEO", "XMR", "FTM", "SUSHI", "LUNA", "BTT", "AMP", "ENJ",
+          "1INCH", "EGLD", "TFUEL", "ZIL", "BAT", "WAVES", "VGX", "CELO", "COMP", "QNT"
+        ];
         const coin = coins[Math.floor(Math.random() * coins.length)];
         const pair = coin + "USDT";
         const type = Math.random() > 0.5 ? "Long" : "Short";
@@ -393,7 +395,7 @@
           leverage,
           pnl,
           closeTime: times.close,
-          closeTimestamp: closeTime.getTime(), // untuk sorting
+          closeTimestamp: orderTime.getTime(), // untuk sorting
           closeType,
           closePrice,
           tradingFee,
@@ -406,37 +408,44 @@
           orderNo
         });
       }
+      // Urutkan descending berdasarkan waktu close
+      orders.sort((a, b) => b.closeTimestamp - a.closeTimestamp);
+      return orders;
     }
     
-    // Urutkan orders descending berdasarkan closeTimestamp
-    orders.sort((a, b) => b.closeTimestamp - a.closeTimestamp);
+    // Fungsi untuk memperbarui tabel order
+    function updateOrders() {
+      const orders = generateOrdersForToday();
+      const tradeBody = document.getElementById("tradeBody");
+      let rowsHtml = "";
+      orders.forEach(order => {
+        const orderTypeClass = order.type.toLowerCase(); // 'long' atau 'short'
+        rowsHtml += `<tr>
+          <td>${order.pair}</td>
+          <td class="${orderTypeClass}">${order.type}</td>
+          <td>${order.size}</td>
+          <td>${order.leverage}</td>
+          <td class="positive">${order.pnl}</td>
+          <td>${order.closeTime}</td>
+          <td>${order.closeType}</td>
+          <td>${order.closePrice}</td>
+          <td>${order.tradingFee}</td>
+          <td>${order.fundingFee}</td>
+          <td>${order.openTime}</td>
+          <td>${order.avgOpenPrice}</td>
+          <td>${order.openType}</td>
+          <td>${order.tp_sl}</td>
+          <td>${order.trailingStop}</td>
+          <td>${order.orderNo}</td>
+        </tr>`;
+      });
+      tradeBody.innerHTML = rowsHtml;
+    }
     
-    // Tampilkan order ke dalam tabel
-    const tradeBody = document.getElementById("tradeBody");
-    let rowsHtml = "";
-    orders.forEach(order => {
-      // Tambahkan kelas berdasarkan tipe order: Long = .long, Short = .short
-      const orderTypeClass = order.type.toLowerCase();
-      rowsHtml += `<tr>
-        <td>${order.pair}</td>
-        <td class="${orderTypeClass}">${order.type}</td>
-        <td>${order.size}</td>
-        <td>${order.leverage}</td>
-        <td class="positive">${order.pnl}</td>
-        <td>${order.closeTime}</td>
-        <td>${order.closeType}</td>
-        <td>${order.closePrice}</td>
-        <td>${order.tradingFee}</td>
-        <td>${order.fundingFee}</td>
-        <td>${order.openTime}</td>
-        <td>${order.avgOpenPrice}</td>
-        <td>${order.openType}</td>
-        <td>${order.tp_sl}</td>
-        <td>${order.trailingStop}</td>
-        <td>${order.orderNo}</td>
-      </tr>`;
-    });
-    tradeBody.innerHTML = rowsHtml;
+    // Panggil updateOrders() saat halaman dimuat
+    updateOrders();
+    // Perbarui order setiap 30 detik
+    setInterval(updateOrders, 30000);
     
     // Toggle untuk aset plugin
     document.getElementById('aset-toggle').addEventListener('click', function() {
