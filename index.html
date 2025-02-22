@@ -1,323 +1,221 @@
-<!DOCTt="UTF-8">
-    <meta name="viewport" contta charset="UTF-8">
-        <meta name="viewport" content="width=olio Trading</title>
-              <style>
-                  body {
-                      backgroue>
-              <style>
-                  body {
-                      background-coloin: 0;
-                      padding: 0;
-                         margin: 0;
-                      padding: 0;
-                         margin: 0;
-                      padding: 0;
-                       nt: space-betws: center;
-                      justify-content: space-betws: center;
-                      justify-content: space-betwimg {ound-color: #1a1a1a;
-              u a {
-                     gapd-color: green;
-                  5px;
-                      background-color: green;
-                  5px;
-                      background-color: green;
-                  5px;
-                      background-color: green;
-                  5px;
-                      background-color: green;
-                  5px;
-                      background-color: green;ute;
-                      right: 0;
-                  position: absolute;
-                      right: 0;
-                  position: absolute;
-                      right: 0;
-                  position: absolute;
-                      right: 0;
-                  position: absolute;
-                      right: 0;
-                  position: absolute;
-                      right: 0;
-                  position: absolute;
-                   px;
-                      padding: 5px 0;
-                  }
-                  px;
-                      padding: 5px 0;
-                  }
-                  px;
-                      padding: 5px 0;
-                  }
-                  px;
-                      padding: 5px 0;
-                  }
-                  ortanted !important;
-                      color: white !importanted !important;
-                      color: white !importanted !important;
-                      color: white !importanted !important;
-                      color: white !importanted !important;
-                      color: white !importanted !important;
-                      color:   .portfolio {
-              nt-size: 14px;
-                  }
-                  .portfolio {
-          ter;
-                .datetime {
-                      text-align: center;
-                .datetime {
-                      text-align: center;
-                .datetime {
-                      text-align: center;
-                .datetime {
-                      text-align: center;
-                      text-align: center;
-              padding: 8px;
-                      text-align: center;
-              padding: 8px;
-                      text-align: center;
-              padding: 8px;
-                      text-align: center;
-              padding: 8px;
-                      text-align: center;
-              padding: 8px;
-                      text-align: center;
-              padding: rading-table th {
-                              }
-                  .t: #f0;
-                  }
-                  .loss {
-                      color: #f0;
-                  }
-                  .loss {
-                      color: #f0;
-                  }
-                  .loss {
-                      color: #f0;
-                  }
-                  .loss {
-                      color: #f0;
-                  }
-                  .loss {
-                      color: #ff3333osting.imagekit.io//ef613d48f7src="https://media-hosting.imagekit.io//ef613d48f7src="https://media-hosting.imagekit.io//ef613d48f7src="https://media-hosting.imagekit.io//ef613d48f71>
-                         f="        <a href="#">Spot</a>a>
-                                     <a href="        <a h    <div class="account-drop">AKUN AccountType('live')">Akun Live</a>d<div onclick="setAccountType('live')">Akun Live</div>d<div onclick="setAccountType('live')">Akun Live</div>d<div onclick="setAccountType('live')">Akun Live</div>d<div onclick="setAccountType('live')">Akun Live</div>d<div onclick="setAccountType('live')">Akun Live</div>d<div onclick="setAccountType('live')">Akun Live</div>div>
-                                       nclick="setAccountType('live')">Akun Live</div>
-                                         nclick="setAccountType('live')">Akun Live</div>
-                                           nclickop-inme() {
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Trading</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #1a1a1a;
+        }
+        .logo img {
+            width: 120px;
+        }
+        .menu {
+            display: flex;
+            gap: 15px;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .account {
+            position: relative;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 5px;
+            background-color: green;
+            color: black;
+            font-weight: bold;
+        }
+        .account-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: #2b2b2b;
+            width: 120px;
+            border-radius: 5px;
+            padding: 5px 0;
+        }
+        .account-dropdown div {
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .account-dropdown div:hover {
+            background: #3b3b3b;
+        }
+        .account-red {
+            background-color: red !important;
+            color: white !important;
+        }
+        .top-info {
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .portfolio {
+            padding: 20px;
+        }
+        .portfolio h2 {
+            text-align: center;
+        }
+        .datetime {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .trading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .trading-table th, .trading-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+        .trading-table th {
+            background: #1f1f1f;
+        }
+        .profit {
+            color: #00ff00;
+        }
+        .loss {
+            color: #ff3333;
+        }
+    </style>
+</head>
+<body>
 
-                                               <script>
-                                                         function updateDateTime() {
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="https://media-hosting.imagekit.io//ef613d48f7134f44/bingx_1.png" alt="BingX Logo">
+        </div>
+        <div class="menu">
+            <a href="#">Buy Crypto</a>
+            <a href="#">Markets</a>
+            <a href="#">Spot</a>
+            <a href="#">Derivatives</a>
+            <a href="#">Copy Trading</a>
+            <a href="#">Wealth</a>
+            <a href="#">Rewards Hub</a>
+            <a href="#">More</a>
+        </div>
+        <div class="account" onclick="toggleAccountMenu()">AKUN LIVE</div>
+        <div class="account-dropdown" id="accountDropdown">
+            <div onclick="setAccountType('live')">Akun Live</div>
+            <div onclick="setAccountType('demo')" class="account-red">Akun Demo</div>
+        </div>
+    </div>
 
-                                                               <script>
-                                                                         function updateDateTime() {
+    <!-- Informasi Akun -->
+    <div class="top-info">
+        <p>USDT: 0</p>
+        <p>Equity: <b>280.00</b></p>
+        <p>Account Balance: 280.00</p>
+        <p>Unrealized PnL: --</p>
+        <p>Margin Rate: 0</p>
+        <p>Avail. Margin: 0.00</p>
+        <p>Position Margin: 0.00</p>
+        <p>Trial Fund: 0</p>
+    </div>
 
-                                                                               <script>
-                                                                         function updateDateTime() {
+    <!-- Tanggal & Jam -->
+    <div class="datetime" id="datetime"></div>
 
-                                                                               <sc ipt>
-                                                                     : 'numeric', hoions);
-                                                            Text = om()  1))           td>
-                                                              }            </tr>
-                                                                           `;
-                                                                                       }        
-                                                                                           ccountButton.style.color = "white";
-                                                                                                        accountButton.style.cl>erateRandomTrades();
-                                                                                                            </script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
-</body>
-</html>erateRandomTrades();
-</script>
+    <!-- Portfolio Trading -->
+    <div class="portfolio">
+        <h2>Riwayat Trading</h2>
+        <table class="trading-table">
+            <tr>
+                <th>Pair</th>
+                <th>Order Type</th>
+                <th>Margin (USDT)</th>
+                <th>Leverage</th>
+                <th>PnL</th>
+                <th>Close Time</th>
+                <th>Close Price</th>
+                <th>Open Time</th>
+                <th>Open Price</th>
+            </tr>
+            <tbody id="tradeHistory"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            document.getElementById('datetime').innerText = now.toLocaleDateString('id-ID', options);
+        }
+
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        function generateRandomTrades() {
+            const pairs = ["BTCUSDT", "ETHUSDT", "ADAUSDT", "BNBUSDT", "SOLUSDT"];
+            const tradeHistory = document.getElementById("tradeHistory");
+            tradeHistory.innerHTML = "";
+
+            for (let i = 0; i < 10; i++) {
+                const pair = pairs[Math.floor(Math.random() * pairs.length)];
+                const orderType = Math.random() > 0.5 ? "Long" : "Short";
+                const margin = (Math.random() * (50 - 30) + 30).toFixed(2);
+                const leverage = Math.floor(Math.random() * (75 - 50 + 1)) + 50 + "x";
+                const profit = (Math.random() * 50).toFixed(2);
+                const pnl = (Math.random() > 0.5 ? "+" : "-") + profit;
+                const pnlClass = pnl.startsWith("+") ? "profit" : "loss";
+                const closeTime = new Date().toLocaleString('id-ID');
+
+                tradeHistory.innerHTML += `
+                    <tr>
+                        <td>${pair}</td>
+                        <td>${orderType}</td>
+                        <td>${margin}</td>
+                        <td>${leverage}</td>
+                        <td class="${pnlClass}">${pnl}%</td>
+                        <td>${closeTime}</td>
+                        <td>Random</td>
+                        <td>Random</td>
+                        <td>Random</td>
+                    </tr>
+                `;
+            }
+        }
+
+        function toggleAccountMenu() {
+            document.getElementById("accountDropdown").classList.toggle("show");
+        }
+
+        function setAccountType(type) {
+            const accountButton = document.querySelector(".account");
+            if (type === "live") {
+                accountButton.innerText = "AKUN LIVE";
+                accountButton.style.backgroundColor = "green";
+                accountButton.style.color = "black";
+            } else {
+                accountButton.innerText = "AKUN DEMO";
+                accountButton.style.backgroundColor = "red";
+                accountButton.style.color = "white";
+            }
+        }
+
+        generateRandomTrades();
+    </script>
 </body>
 </html>
-                                               </script>
