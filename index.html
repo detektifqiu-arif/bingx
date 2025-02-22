@@ -319,7 +319,7 @@
     }
     updateTime();
     
-    // Daftar lengkap 100 koin (menggunakan nama COIN1 sampai COIN100)
+    // Daftar lengkap 100 koin (COIN1 hingga COIN100)
     const coins = Array.from({length: 100}, (_, i) => `COIN${i+1}`);
     
     // Fungsi untuk menghasilkan nomor order acak
@@ -336,8 +336,8 @@
     // Fungsi untuk menghasilkan order hanya untuk hari ini, sehingga waktu close tidak melebihi waktu saat ini.
     function generateOrdersForToday() {
       let orders = [];
-      // Buat 8-10 order untuk hari ini
-      const ordersCount = Math.floor(Math.random() * (10 - 8 + 1)) + 8;
+      // Tetapkan jumlah order menjadi 100 (satu order per koin)
+      const ordersCount = 100;
       const today = new Date();
       // Ambil awal hari (00:00) untuk hari ini dengan zona waktu Jakarta
       const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -345,7 +345,7 @@
       const diffToday = nowTimestamp - base.getTime(); // ms sejak awal hari
       
       for (let j = 0; j < ordersCount; j++) {
-        // Generate offset acak antara 0 dan diffToday sehingga orderTime <= now
+        // Generate offset acak antara 0 dan diffToday sehingga orderTime <= sekarang
         const randomOffset = Math.floor(Math.random() * diffToday);
         let orderTime = new Date(base.getTime() + randomOffset);
         // Open time: orderTime dikurangi antara 1 hingga 15 menit, pastikan tidak kurang dari base
