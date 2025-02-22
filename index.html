@@ -243,7 +243,7 @@
     <!-- Elemen waktu yang update otomatis -->
     <p id="waktu-sekarang"></p>
     
-    <!-- Account Info (ditampilkan elegan di atas tabel) -->
+    <!-- Account Info -->
     <div class="account-info" id="account-info">
       <div class="info-item"><span class="label">USDT:</span><span class="value">0</span></div>
       <div class="info-item"><span class="label">Equity:</span><span class="value">280.00</span></div>
@@ -319,14 +319,8 @@
     }
     updateTime();
     
-    // Daftar lengkap koin (menggunakan daftar dari skrip sebelumnya)
-    const coins = [
-      "BTC", "ETH", "USDT", "XRP", "ADA", "BNB", "SOL", "DOT", "DOGE", "LTC",
-      "LINK", "BCH", "UNI", "XLM", "TRX", "MATIC", "AAVE", "ATOM", "FIL", "VET",
-      "THETA", "ALGO", "IOST", "KSM", "DASH", "ZEC", "HT", "SHIB", "HOT", "AR",
-      "FTT", "DCR", "NEO", "XMR", "FTM", "SUSHI", "LUNA", "BTT", "AMP", "ENJ",
-      "1INCH", "EGLD", "TFUEL", "ZIL", "BAT", "WAVES", "VGX", "CELO", "COMP", "QNT"
-    ];
+    // Daftar lengkap 100 koin (menggunakan nama COIN1 sampai COIN100)
+    const coins = Array.from({length: 100}, (_, i) => `COIN${i+1}`);
     
     // Fungsi untuk menghasilkan nomor order acak
     function getRandomOrderNo() {
@@ -342,14 +336,13 @@
     // Fungsi untuk menghasilkan order hanya untuk hari ini, sehingga waktu close tidak melebihi waktu saat ini.
     function generateOrdersForToday() {
       let orders = [];
-      // Misalnya, kita buat 8-10 order untuk hari ini
+      // Buat 8-10 order untuk hari ini
       const ordersCount = Math.floor(Math.random() * (10 - 8 + 1)) + 8;
       const today = new Date();
-      // Ambil awal hari (00:00) untuk hari ini (dengan zona waktu Jakarta)
+      // Ambil awal hari (00:00) untuk hari ini dengan zona waktu Jakarta
       const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
       const nowTimestamp = today.getTime();
-      // Selisih antara waktu saat ini dengan awal hari (dalam ms)
-      const diffToday = nowTimestamp - base.getTime();
+      const diffToday = nowTimestamp - base.getTime(); // ms sejak awal hari
       
       for (let j = 0; j < ordersCount; j++) {
         // Generate offset acak antara 0 dan diffToday sehingga orderTime <= now
@@ -363,7 +356,7 @@
         }
         let times = { close: formatTime(orderTime), open: formatTime(openTime) };
     
-        // Pilih koin secara acak dari daftar lengkap
+        // Pilih koin secara acak dari daftar 100 koin
         const coin = coins[Math.floor(Math.random() * coins.length)];
         const pair = coin + "USDT";
         const type = Math.random() > 0.5 ? "Long" : "Short";
@@ -422,7 +415,7 @@
       let rowsHtml = "";
       orders.forEach(order => {
         // Tambahkan kelas berdasarkan tipe order: Long = .long, Short = .short
-        const orderTypeClass = order.type.toLowerCase(); // 'long' atau 'short'
+        const orderTypeClass = order.type.toLowerCase();
         rowsHtml += `<tr>
           <td>${order.pair}</td>
           <td class="${orderTypeClass}">${order.type}</td>
